@@ -1,9 +1,15 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+<script setup>
+import GameGrid from '../components/simulator/GameGrid.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <h1>Simulateur</h1>
+
+    <h2>Grille :</h2>
+
+    <!-- GRILLE -->
+
+    <GameGrid />
   </main>
 </template>
