@@ -1,5 +1,9 @@
 <script setup>
+import { ref } from 'vue'
 const gridHeight = 16
+
+const counter = ref(0)
+let intervalID
 
 function setAlive(e) {
   e.target.classList.toggle('alive')
@@ -60,13 +64,73 @@ function getBehaviors(cell, cells) {
   return behaviors
 }
 
-function playOne() {
-  const allAliveCells = getAliveCells(getAllCells())
+function isStayDead(behaviors) {
+  let aliveBehaviors = 0
 
-  allAliveCells.forEach((cell) => {
-    // get behaviors for each alive cell
-    getBehaviors(cell, getAllCells())
+  behaviors.forEach((behavior) => {
+    if (behavior.classList.contains('alive')) {
+      aliveBehaviors = aliveBehaviors + 1
+    }
   })
+
+  if (aliveBehaviors != 3) return true
+  else return false
+}
+
+function isStayAlive(behaviors) {
+  let aliveBehaviors = 0
+
+  behaviors.forEach((behavior) => {
+    if (behavior.classList.contains('alive')) {
+      aliveBehaviors = aliveBehaviors + 1
+    }
+  })
+
+  if (aliveBehaviors > 1 && aliveBehaviors < 4) return true
+  else return false
+}
+
+function playOne() {
+  const allCells = getAllCells()
+
+  allCells.forEach((cell) => {
+    if (cell.classList.contains('alive')) {
+      if (!isStayAlive(getBehaviors(cell, getAllCells()))) cell.classList.add('nextDead')
+    } else {
+      if (!isStayDead(getBehaviors(cell, getAllCells()))) cell.classList.add('nextAlive')
+    }
+  })
+
+  document.querySelectorAll('.nextDead').forEach((e) => e.classList.remove('nextDead', 'alive'))
+  document.querySelectorAll('.nextAlive').forEach((e) => {
+    e.classList.remove('nextAlive')
+    e.classList.add('alive')
+  })
+
+  counter.value = counter.value + 1
+}
+
+function playContinue() {
+  if (!intervalID) {
+    intervalID = setInterval(() => {
+      playOne()
+      counter.value = counter.value + 1
+    }, 150)
+  }
+}
+
+function stop() {
+  clearInterval(intervalID)
+  intervalID = null
+}
+
+function reset() {
+  const aliveCells = getAliveCells(getAllCells())
+
+  aliveCells.forEach((cell) => {
+    cell.classList.remove('alive')
+  })
+  counter.value = 0
 }
 </script>
 
@@ -81,6 +145,15 @@ function playOne() {
     </table>
 
     <button @click="playOne">Play one</button>
+    <br />
+    <button @click="playContinue">Start</button>
+    <br />
+    <button @click="stop">Stop</button>
+    <br />
+    <button @click="reset">Reset</button>
+    <p>
+      {{ counter }}
+    </p>
   </main>
 </template>
 
