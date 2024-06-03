@@ -6,8 +6,6 @@ import GameGrid from '../components/simulator/GameGrid.vue'
   <main>
     <h1>Simulateur</h1>
 
-    <h2>Grille :</h2>
-
     <!-- GRILLE -->
 
     <GameGrid />

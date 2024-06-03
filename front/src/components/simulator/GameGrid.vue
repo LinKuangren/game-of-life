@@ -1,12 +1,20 @@
 <script setup>
 import { ref } from 'vue'
-const gridHeight = 16
+const gridHeight = 32
+
+let isMouseDown = false
 
 const counter = ref(0)
 let intervalID
 
 function setAlive(e) {
   e.target.classList.toggle('alive')
+}
+
+function setSeriesAlive(e) {
+  if (isMouseDown) {
+    e.target.classList.toggle('alive')
+  }
 }
 
 // get all cells
@@ -36,9 +44,9 @@ function getAliveCells(cells) {
   return aliveCells
 }
 
-// get 8 behaviors of a cell
-function getBehaviors(cell, cells) {
-  const behaviors = []
+// get 8 neighbours of a cell
+function getNeighbours(cell, cells) {
+  const neighbours = []
   const cellX = Number(cell.id.split('-')[0])
   const cellY = Number(cell.id.split('-')[1])
 
@@ -56,37 +64,37 @@ function getBehaviors(cell, cells) {
   cells.forEach((c) => {
     possibilities.forEach((possibility) => {
       if (c.id === possibility) {
-        behaviors.push(c)
+        neighbours.push(c)
       }
     })
   })
 
-  return behaviors
+  return neighbours
 }
 
-function isStayDead(behaviors) {
-  let aliveBehaviors = 0
+function isStayDead(neighbours) {
+  let aliveNeighbours = 0
 
-  behaviors.forEach((behavior) => {
-    if (behavior.classList.contains('alive')) {
-      aliveBehaviors = aliveBehaviors + 1
+  neighbours.forEach((neighbour) => {
+    if (neighbour.classList.contains('alive')) {
+      aliveNeighbours = aliveNeighbours + 1
     }
   })
 
-  if (aliveBehaviors != 3) return true
+  if (aliveNeighbours != 3) return true
   else return false
 }
 
-function isStayAlive(behaviors) {
-  let aliveBehaviors = 0
+function isStayAlive(neighbours) {
+  let aliveNeighbours = 0
 
-  behaviors.forEach((behavior) => {
-    if (behavior.classList.contains('alive')) {
-      aliveBehaviors = aliveBehaviors + 1
+  neighbours.forEach((neighbours) => {
+    if (neighbours.classList.contains('alive')) {
+      aliveNeighbours = aliveNeighbours + 1
     }
   })
 
-  if (aliveBehaviors > 1 && aliveBehaviors < 4) return true
+  if (aliveNeighbours > 1 && aliveNeighbours < 4) return true
   else return false
 }
 
@@ -95,9 +103,11 @@ function playOne() {
 
   allCells.forEach((cell) => {
     if (cell.classList.contains('alive')) {
-      if (!isStayAlive(getBehaviors(cell, getAllCells()))) cell.classList.add('nextDead')
+      if (!isStayAlive(getNeighbours(cell, allCells))) {
+        cell.classList.add('nextDead')
+      }
     } else {
-      if (!isStayDead(getBehaviors(cell, getAllCells()))) cell.classList.add('nextAlive')
+      if (!isStayDead(getNeighbours(cell, allCells))) cell.classList.add('nextAlive')
     }
   })
 
@@ -115,7 +125,7 @@ function playContinue() {
     intervalID = setInterval(() => {
       playOne()
       counter.value = counter.value + 1
-    }, 150)
+    }, 300)
   }
 }
 
@@ -137,9 +147,15 @@ function reset() {
 <template>
   <main>
     <table>
-      <tbody>
+      <tbody @mousedown="isMouseDown = !isMouseDown" @mouseup="isMouseDown = !isMouseDown">
         <tr v-for="row in gridHeight" :key="row">
-          <td v-for="col in gridHeight" :key="col" :id="row + '-' + col" @click="setAlive"></td>
+          <td
+            v-for="col in gridHeight"
+            :key="col"
+            :id="row + '-' + col"
+            @mouseenter="setSeriesAlive"
+            @click="setAlive"
+          ></td>
         </tr>
       </tbody>
     </table>
