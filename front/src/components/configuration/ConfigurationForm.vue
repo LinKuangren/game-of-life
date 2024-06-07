@@ -1,0 +1,69 @@
+<template>
+    <form v-on:submit="createConfiguration" action="http://localhost:5173/wiki" class="form">
+        <label>Nom</label>
+        <input type="text" v-model="name" required>
+        <label>Illustration</label>
+        <!--<input
+            type="file"
+            accept="image/*"
+            ref="file"
+            @change="upload()"
+            required
+        />-->
+        <label>Type</label>
+        <select name="type" id="type" v-model="type" required>
+          <option value="Vaisseau">Vaisseau</option>
+          <option value="autre">Autre</option>
+        </select>
+        <label>BoundingBox</label>
+        <input type="text" v-model="bundingBox" required>
+        <label>nbCellules</label>
+        <input type="int" v-model="nbCellules" required>
+        <label>periode</label>
+        <input type="int" v-model="periode" required>
+        <label>speed</label>
+        <input type="text" v-model="speed" required>
+        <button class="gdc-2 gdc-color-2">Envoyer</button>
+    </form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      name: "",
+      //illustration: undefined,
+      type: "",
+      bundingBox: "",
+      nbCellules: "",
+      periode: "",
+      speed: "",
+    };
+  },
+  methods: {
+    async createConfiguration() {
+      const response = await fetch("http://127.0.0.1:5173/wiki/new-configuration", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: this.name,
+          illustration: this.illustration,
+          type: this.type,
+          bundingBox: this.bundingBox,
+          nbCellules: this.nbCellules,
+          periode: this.periode,
+          speed: this.speed,
+        }),
+      });
+      console.log(response);
+      if (response.ok) {
+        const configuration = await response.json();
+        console.log('Configuration ajoutée :', configuration);
+      }
+    },
+  },
+};
+</script>

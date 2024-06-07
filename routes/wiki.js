@@ -3,32 +3,62 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
-router.get('/', async function(req, res, next) {
-    const configuration = await prisma.Configuration.findMany()
-    res.send(configuration);
+router.get('/', async (req, res) => {
+    try {
+        const configurations = await prisma.configuration.findMany();
+        res.json(configurations);
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des configurations' });
+    }
 });
 
-router.post('/new-configuration', async function(req, res) {
-    
-})
+router.post('/new-configuration', async (req, res) => {
+    try {
+        const newConfiguration = await prisma.configuration.create({
+            data: req.body,
+        });
+        res.status(201).json(newConfiguration);
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la création de la configuration' });
+    }
+});
 
-router.delete('/:id', async function(req, res) {
-    const configuration = await prisma.configuration.delete({
-        where: {
-            id: parseInt(req.params.id)
+router.delete('/:id', async (req, res) => {
+    try {
+        await prisma.configuration.delete({
+            where: { id: parseInt(req.params.id) }
+        });
+        res.status(200).json({ message: 'La configuration a été supprimée.' });
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la suppression de la configuration' });
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const configuration = await prisma.configuration.findUnique({
+            where: { id: parseInt(req.params.id) },
+        });
+        if (configuration) {
+            res.json(configuration);
+        } else {
+            res.status(404).json({ error: 'Configuration non trouvée' });
         }
-    });
-
-    res.status(200).json({ message: `La configuration est supprimé.` });
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la récupération de la configuration' });
+    }
 });
 
-router.get('/:id', async function(req, res){
-    
-});
- 
-router.put("/:id", async function (req, res) {
-    
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedConfiguration = await prisma.configuration.update({
+            where: { id: parseInt(req.params.id) },
+            data: req.body,
+        });
+        res.json(updatedConfiguration);
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la mise à jour de la configuration' });
+    }
 });
 
 module.exports = router;
