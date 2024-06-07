@@ -1,123 +1,118 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const gridHeight = 32
+const gridWidth = 50
+let gridTable = ref([])
+let nextTable = []
 
 let isMouseDown = false
 
 const counter = ref(0)
 let intervalID
 
-function setAlive(e) {
-  e.target.classList.toggle('alive')
+onMounted(() => {
+  let row = 0
+  for (row; row < gridHeight; row++) {
+    let col = 0
+    gridTable.value.push([])
+    nextTable.push([])
+    for (col; col < gridWidth; col++) {
+      gridTable.value[row].push(0)
+      nextTable[row].push(0)
+    }
+  }
+})
+
+function setAlive(row, col) {
+  if (gridTable.value[row][col] === 0) {
+    gridTable.value[row][col] = 1
+  } else gridTable.value[row][col] = 0
 }
 
-function setSeriesAlive(e) {
+function setSeriesAlive(row, col) {
   if (isMouseDown) {
-    e.target.classList.toggle('alive')
+    if (gridTable.value[row][col] === 0) {
+      gridTable.value[row][col] = 1
+    }
   }
 }
 
-// get all cells
-function getAllCells() {
-  const rows = document.querySelectorAll('tr')
-  const cells = []
-
-  rows.forEach((row) => {
-    row.querySelectorAll('td').forEach((cell) => {
-      cells.push(cell)
-    })
-  })
-
-  return cells
-}
-
-// get alive cells
-function getAliveCells(cells) {
-  const aliveCells = []
-
-  cells.forEach((cell) => {
-    if (cell.classList.contains('alive')) {
-      aliveCells.push(cell)
-    }
-  })
-
-  return aliveCells
-}
-
-// get 8 neighbours of a cell
-function getNeighbours(cell, cells) {
-  const neighbours = []
-  const cellX = Number(cell.id.split('-')[0])
-  const cellY = Number(cell.id.split('-')[1])
-
-  const possibilities = [
-    `${cellX - 1}-${cellY - 1}`,
-    `${cellX - 1}-${cellY}`,
-    `${cellX - 1}-${cellY + 1}`,
-    `${cellX}-${cellY - 1}`,
-    `${cellX}-${cellY + 1}`,
-    `${cellX + 1}-${cellY - 1}`,
-    `${cellX + 1}-${cellY}`,
-    `${cellX + 1}-${cellY + 1}`
-  ]
-
-  cells.forEach((c) => {
-    possibilities.forEach((possibility) => {
-      if (c.id === possibility) {
-        neighbours.push(c)
-      }
-    })
-  })
-
-  return neighbours
-}
-
-function isStayDead(neighbours) {
-  let aliveNeighbours = 0
-
-  neighbours.forEach((neighbour) => {
-    if (neighbour.classList.contains('alive')) {
-      aliveNeighbours = aliveNeighbours + 1
-    }
-  })
-
-  if (aliveNeighbours != 3) return true
-  else return false
-}
-
-function isStayAlive(neighbours) {
-  let aliveNeighbours = 0
-
-  neighbours.forEach((neighbours) => {
-    if (neighbours.classList.contains('alive')) {
-      aliveNeighbours = aliveNeighbours + 1
-    }
-  })
-
-  if (aliveNeighbours > 1 && aliveNeighbours < 4) return true
-  else return false
-}
-
 function playOne() {
-  const allCells = getAllCells()
-
-  allCells.forEach((cell) => {
-    if (cell.classList.contains('alive')) {
-      if (!isStayAlive(getNeighbours(cell, allCells))) {
-        cell.classList.add('nextDead')
-      }
-    } else {
-      if (!isStayDead(getNeighbours(cell, allCells))) cell.classList.add('nextAlive')
+  nextTable = []
+  for (let row = 0; row < gridHeight; row++) {
+    nextTable.push([])
+    for (let col = 0; col < gridWidth; col++) {
+      nextTable[row].push(0)
     }
-  })
+  }
 
-  document.querySelectorAll('.nextDead').forEach((e) => e.classList.remove('nextDead', 'alive'))
-  document.querySelectorAll('.nextAlive').forEach((e) => {
-    e.classList.remove('nextAlive')
-    e.classList.add('alive')
-  })
+  for (let row = 0; row < gridHeight; row++) {
+    for (let col = 0; col < gridWidth; col++) {
+      let possibilities = [
+        `${row - 1}_${col - 1}`,
+        `${row - 1}_${col}`,
+        `${row - 1}_${col + 1}`,
+        `${row}_${col - 1}`,
+        `${row}_${col + 1}`,
+        `${row + 1}_${col - 1}`,
+        `${row + 1}_${col}`,
+        `${row + 1}_${col + 1}`
+      ]
+      let aliveNeighbours = 0
 
-  counter.value = counter.value + 1
+      possibilities.forEach((possibility) => {
+        const [r, c] = possibility.split('_')
+        if (r >= 0 && r < gridHeight && c >= 0 && c < gridWidth && gridTable.value[r][c] === 1) {
+          aliveNeighbours += 1
+        }
+      })
+
+      let nextState = 0
+      if (gridTable.value[row][col] === 0 && aliveNeighbours === 3) {
+        nextState = 1
+      }
+      if (gridTable.value[row][col] === 1 && aliveNeighbours > 1 && aliveNeighbours < 4) {
+        nextState = 1
+      }
+
+      nextTable[row][col] = nextState
+
+      // if (!isStayAlive(aliveNeighbours)) {
+      //   nextTable[row][col] = 0
+      // } else {
+      //   if (!isStayDead(aliveNeighbours)) {
+      //     nextTable[row][col] = 1
+      //   }
+      // }
+    }
+  }
+
+  gridTable.value = nextTable
+
+  // const allCells = getAllCells()
+  // const aliveCells = getAliveCells()
+
+  // aliveCells.forEach((cell) => {
+  //   getNeighbours(cell)
+  // })
+
+  // allCells.forEach((cell) => {
+  //   if (cell.classList.contains('alive')) {
+  //     if (!isStayAlive(getNeighbours(cell, allCells))) {
+  //       cell.classList.add('nextDead')
+  //     }
+  //   } else {
+  //     if (!isStayDead(getNeighbours(cell, allCells))) cell.classList.add('nextAlive')
+  //   }
+  // })
+
+  // document.querySelectorAll('.nextDead').forEach((e) => e.classList.remove('nextDead', 'alive'))
+  // document.querySelectorAll('.nextAlive').forEach((e) => {
+  //   e.classList.remove('nextAlive')
+  //   e.classList.add('alive')
+  // })
+
+  // counter.value = counter.value + 1
 }
 
 function playContinue() {
@@ -125,7 +120,7 @@ function playContinue() {
     intervalID = setInterval(() => {
       playOne()
       counter.value = counter.value + 1
-    }, 300)
+    }, 100)
   }
 }
 
@@ -135,11 +130,15 @@ function stop() {
 }
 
 function reset() {
-  const aliveCells = getAliveCells(getAllCells())
-
-  aliveCells.forEach((cell) => {
-    cell.classList.remove('alive')
-  })
+  gridTable.value = []
+  let row = 0
+  for (row; row < gridHeight; row++) {
+    let col = 0
+    gridTable.value.push([])
+    for (col; col < gridWidth; col++) {
+      gridTable.value[row].push(0)
+    }
+  }
   counter.value = 0
 }
 </script>
@@ -148,14 +147,16 @@ function reset() {
   <main>
     <table>
       <tbody @mousedown="isMouseDown = !isMouseDown" @mouseup="isMouseDown = !isMouseDown">
-        <tr v-for="row in gridHeight" :key="row">
+        <tr v-for="row in gridTable.length" :key="'row-' + row">
           <td
-            v-for="col in gridHeight"
-            :key="col"
-            :id="row + '-' + col"
-            @mouseenter="setSeriesAlive"
-            @click="setAlive"
-          ></td>
+            v-for="(col, index) in gridTable[row]"
+            :key="'col-' + row + '-' + index"
+            :class="col === 1 ? 'alive' : ''"
+            @mouseover="setSeriesAlive(row, index)"
+            @click="setAlive(row, index)"
+          >
+            {{ col }}
+          </td>
         </tr>
       </tbody>
     </table>
