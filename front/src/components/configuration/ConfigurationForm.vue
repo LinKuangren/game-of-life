@@ -16,7 +16,7 @@
           <option value="autre">Autre</option>
         </select>
         <label>BoundingBox</label>
-        <input type="text" v-model="bundingBox" required>
+        <input type="text" v-model="boundingBox" required>
         <label>nbCellules</label>
         <input type="int" v-model="nbCellules" required>
         <label>periode</label>
@@ -32,9 +32,10 @@ export default {
   data() {
     return {
       name: "",
+      illustration: "test",
       //illustration: undefined,
       type: "",
-      bundingBox: "",
+      boundingBox: "",
       nbCellules: "",
       periode: "",
       speed: "",
@@ -42,7 +43,7 @@ export default {
   },
   methods: {
     async createConfiguration() {
-      const response = await fetch("http://127.0.0.1:5173/wiki/new-configuration", {
+      const response = await fetch("http://127.0.0.1:3000/wiki/new-configuration", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -52,9 +53,9 @@ export default {
           name: this.name,
           illustration: this.illustration,
           type: this.type,
-          bundingBox: this.bundingBox,
-          nbCellules: this.nbCellules,
-          periode: this.periode,
+          boundingBox: this.boundingBox,
+          nbCellules: Number(this.nbCellules),
+          periode: Number (this.periode),
           speed: this.speed,
         }),
       });

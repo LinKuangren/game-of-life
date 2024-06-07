@@ -14,11 +14,13 @@ router.get('/', async (req, res) => {
 
 router.post('/new-configuration', async (req, res) => {
     try {
-        const newConfiguration = await prisma.configuration.create({
-            data: req.body,
+        const { name, illustration, type, boundingBox, nbCellules, periode, speed } = req.body;
+        const configuration = await prisma.configuration.create({
+            data: { name, illustration, type, boundingBox, nbCellules, periode, speed },
         });
-        res.status(201).json(newConfiguration);
+        res.status(200).json(configuration);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Erreur lors de la création de la configuration' });
     }
 });
