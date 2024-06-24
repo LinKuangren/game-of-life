@@ -1,18 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routers
-var wikiRouter = require('./routes/wiki.js');
-
-// Routes
+const wikiRouter = require('./routes/wiki');
 app.use('/wiki', wikiRouter);
 
-
-// Server config
-let hostname = '127.0.0.1';
+const hostname = '127.0.0.1';
 const port = process.env.PORT || 3000;
 
 app.listen(port, hostname, () => {
