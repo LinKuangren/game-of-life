@@ -14,9 +14,9 @@
     <label>nbCellules</label>
     <input type="number" v-model="nbCellules" required>
     <label>periode</label>
-    <input type="number" v-model="periode" required>
+    <input type="number" v-model="periode">
     <label>speed</label>
-    <input type="text" v-model="speed" required>
+    <input type="text" v-model="speed">
     <button type="submit" class="gdc-2 gdc-color-2">Envoyer</button>
   </form>
 </template>

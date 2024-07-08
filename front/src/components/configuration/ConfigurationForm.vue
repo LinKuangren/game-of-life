@@ -20,9 +20,9 @@
         <label>nbCellules</label>
         <input type="int" v-model="nbCellules" required>
         <label>periode</label>
-        <input type="int" v-model="periode" required>
+        <input type="int" v-model="periode">
         <label>speed</label>
-        <input type="text" v-model="speed" required>
+        <input type="text" v-model="speed">
         <button class="gdc-2 gdc-color-2">Envoyer</button>
     </form>
 </template>
