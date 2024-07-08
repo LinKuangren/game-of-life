@@ -10,24 +10,41 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: 'Accueil'
+      }
     },
     {
       path: '/wiki',
       name: 'wiki',
-      component: WikiView
+      component: WikiView,
+      meta: {
+        title: 'Wiki'
+      }
     },
     {
       path: '/wiki/new-configuration',
       name: 'new-wiki',
-      component: NewWikiView
+      component: NewWikiView,
+      meta: {
+        title: 'New Wiki'
+      }
     },
     {
       path: '/wiki/edit/:id',
       name: 'edit-wiki',
-      component: EditWikiView
+      component: EditWikiView,
+      meta: {
+        title: 'Edit wiki'
+      }
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || 'Vite App'
+  next()
 })
 
 export default router
