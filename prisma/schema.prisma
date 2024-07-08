@@ -20,7 +20,7 @@ model Configuration {
   type          String      
   boundingBox   String      
   nbCellules    Int        
-  periode       Int         
-  speed         String       
+  periode       Int?
+  speed         String?
 }
 
