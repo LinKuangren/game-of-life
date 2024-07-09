@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import SimulatorView from '../views/SimulatorView.vue'
 import WikiView from '../views/Wiki/WikiView.vue'
 import NewWikiView from '../views/Wiki/NewWikiView.vue'
 import EditWikiView from '../views/Wiki/EditWikiView.vue'
@@ -21,6 +22,14 @@ const router = createRouter({
       component: WikiView,
       meta: {
         title: 'Wiki'
+      }
+    },
+    {
+      path: '/simulateur',
+      name: 'simulateur',
+      component: SimulatorView,
+      meta: {
+        title: 'Simulateur'
       }
     },
     {

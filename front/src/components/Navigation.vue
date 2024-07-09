@@ -4,6 +4,7 @@
         <div class="header_nav">
             <nav>
                 <RouterLink to="/" class="menu">Home</RouterLink>
+                <RouterLink to="/simulateur" class="menu">Simulateur</RouterLink>
                 <RouterLink to="/wiki" class="menu">Wiki</RouterLink>
             </nav>
         </div>
