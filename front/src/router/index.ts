@@ -4,6 +4,7 @@ import SimulatorView from '../views/SimulatorView.vue'
 import WikiView from '../views/Wiki/WikiView.vue'
 import NewWikiView from '../views/Wiki/NewWikiView.vue'
 import EditWikiView from '../views/Wiki/EditWikiView.vue'
+import ReadWikiView from '../views/Wiki/ReadWikiView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,14 @@ const router = createRouter({
       component: EditWikiView,
       meta: {
         title: 'Edit wiki'
+      }
+    },
+    {
+      path: '/wiki/:id',
+      name: 'read-wiki',
+      component: ReadWikiView,
+      meta: {
+        title: 'Read wiki'
       }
     }
   ]
