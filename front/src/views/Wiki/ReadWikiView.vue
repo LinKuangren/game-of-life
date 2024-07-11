@@ -4,13 +4,13 @@
         <h1 class="text-center py-14 text-4xl">{{ configuration.name }}</h1>
         <div class="flex justify-center">
             <div>
-                <p>{{ configuration.illustration }}</p>
-                <div class="del-put">
+                <img :src="`http://localhost:3000/uploads/${configuration.illustration}`" alt="Image de la configuration"/>
+                <div class="">
                     <router-link :to="`/wiki`">
                         <button @click="deleteConfiguration(configuration.id)">Supprimer</button>
                     </router-link>
                     <router-link :to="`/wiki/edit/${configuration.id}`">
-                        <button class="gdc-2 gdc-color-2">Modifier</button>
+                        <button class="">Modifier</button>
                     </router-link>
                 </div>
             </div>

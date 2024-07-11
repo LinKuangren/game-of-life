@@ -1,34 +1,16 @@
 <template>
   <main>
-    <h1>Wiki</h1>
-    <div class="cta-create">
-      <router-link to="/wiki/new-configuration">
-        <button class="gdc-2 gdc-color-2">Créer une configuration</button>
-      </router-link>
-    </div>
-    <ul>
-      <li v-for="configuration in configurations" :key="configuration.id">
-        <h2>{{ configuration.name }}</h2>
-        <p>{{ configuration.illustration }}</p>
-        <p>{{ configuration.type }}</p>
-        <p>{{ configuration.boundingBox }}</p>
-        <p>{{ configuration.nbCellules }}</p>
-        <p>{{ configuration.periode }}</p>
-        <p>{{ configuration.speed }}</p>
-        <div class="del-put">
-          <button class="gdc-2 gdc-color-1" @click="deleteConfiguration(configuration.id)">Supprimer</button>
-          <router-link :to="`/wiki/edit/${configuration.id}`" class="cta-edit">
-            <button class="gdc-2 gdc-color-2">Modifier</button>
-          </router-link>
-        </div>
-      </li>
-    </ul>
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    <WikiSearch :configurations="configurations" :deleteConfiguration="deleteConfiguration" :errorMessage="errorMessage" />
   </main>
 </template>
 
 <script>
+import WikiSearch from '@/components/configuration/SearchWiki.vue';
+
 export default {
+  components: {
+    WikiSearch
+  },
   data() {
     return {
       configurations: [],

@@ -16,11 +16,10 @@ datasource db {
 model Configuration {
   id            Int         @id @default(autoincrement())
   name          String
-  illustration  String
+  illustration  String?
   type          String      
   boundingBox   String      
   nbCellules    Int        
   periode       Int?
   speed         String?
 }
-
