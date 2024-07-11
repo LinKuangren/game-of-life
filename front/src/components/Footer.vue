@@ -5,7 +5,7 @@
                 <router-link to="/" class="my-0 mx-2	">Accueil</router-link>
                 <router-link to="/wiki" class="my-0 mx-2	">Wiki</router-link>
                 <router-link to="/" class="my-0 mx-2	">Simulateur</router-link>
-                <router-link to="/" class="my-0 mx-2	">Se connecter</router-link>
+                <router-link to="/login" class="my-0 mx-2	">Se connecter</router-link>
             </nav>
         </div>
         <div class="flex justify-center">

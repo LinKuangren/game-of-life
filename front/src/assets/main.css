@@ -3,49 +3,9 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 
-nav {
-  font-weight: 700;
-  justify-content: center;
-}
-
-header {
-  display: flex;
-  background-color: var(--blueF);
-  color: var(--white);
-  padding: 1rem 10rem;
-  justify-content: space-between;
-}
-
 #app {
   font-family: "Pixelify Sans", sans-serif;
   background-color: var(--gray);
-}
-
-footer {
-  background-color: var(--blueF);
-  color: var(--white);
-  padding: 1rem 0;
-}
-
-footer nav {
-  display: flex;
-}
-
-.header_nav {
-  align-content: center;
-}
-
-.logo_simweb_footer {
-  justify-content: center;
-}
-
-.main {
-  margin: 0 5rem;
-  background-color: var(--white);
-}
-
-.menu {
-  margin: 0 0.5rem
 }
 
 .alive {

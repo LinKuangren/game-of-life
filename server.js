@@ -14,6 +14,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const wikiRouter = require('./routes/wiki');
 app.use('/wiki', wikiRouter);
 
+const userRouter = require('./routes/user');
+app.use('/user', userRouter);
+
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3000;
 
