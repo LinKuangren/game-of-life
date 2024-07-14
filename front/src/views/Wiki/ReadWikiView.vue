@@ -7,10 +7,10 @@
                 <img :src="`http://localhost:3000/uploads/${configuration.illustration}`" alt="Image de la configuration"/>
                 <div class="">
                     <router-link :to="`/wiki`">
-                        <button @click="deleteConfiguration(configuration.id)">Supprimer</button>
+                        <button @click="deleteConfiguration(configuration.id)" class="delete-btn">Supprimer</button>
                     </router-link>
                     <router-link :to="`/wiki/edit/${configuration.id}`">
-                        <button class="">Modifier</button>
+                        <button class="edit-btn">Modifier</button>
                     </router-link>
                 </div>
             </div>

@@ -12,3 +12,10 @@
   @apply bg-red-400;
 }
 
+.edit-btn {
+  @apply bg-blueF text-white hover:bg-blue-600;
+}
+
+.delete-btn {
+  @apply bg-error text-white hover:bg-red-600;
+}

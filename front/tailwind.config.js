@@ -9,6 +9,8 @@ export default {
         blueF: 'var(--blueF)',
         green: 'var(--green)',
         gray: 'var(--gray)',
+        ok: 'var(--ok)',
+        error: 'var(--error)'
       }
     }
   },
