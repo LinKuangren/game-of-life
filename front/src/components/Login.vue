@@ -1,11 +1,16 @@
 <template>
-  <div>
-    <form v-on:submit.prevent="newLogin" class="form">
-      <label>Nom</label>
-      <input type="text" v-model="name" required>
-      <label>Mot de passe</label>
-      <input type="password" v-model="password" required>
-      <button class="gdc-2 gdc-color-2" type="submit">Envoyer</button>
+  <div class="w-full max-w-screen-lg m-auto px-8 py-12 self-center">
+    <h1 class="text-center font-bold text-2xl">Se connecter</h1>
+    <form v-on:submit.prevent="newLogin" class="flex flex-col gap-4 mt-16">
+      <label class="flex flex-col gap-2 text-lg">
+        Nom
+        <input-perso type="text" v-model="name" :required="true" />
+      </label>
+      <label class="flex flex-col gap-2>
+        Mot de passe
+        <input-perso type="password" v-model="password" :required="true" />
+      </label>
+      <button class="bg-green w-full py-3 mt-4" type="submit">Connexion</button>
     </form>
     <AlertBox v-if="alertVisible" :message="alertMessage" :type="alertType" />
   </div>
@@ -14,10 +19,12 @@
 <script>
 import axios from 'axios';
 import AlertBox from '@/components/utils/AlertBox.vue';
+import InputPerso from '../components/ui/InputPerso.vue'
 
 export default {
   components: {
     AlertBox,
+    InputPerso,
   },
   data() {
     return {
@@ -27,7 +34,7 @@ export default {
       alertMessage: '',
       alertType: 'success',
       success: false
-    };
+    }
   },
   methods: {
     async newLogin() {
