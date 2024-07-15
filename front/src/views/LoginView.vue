@@ -1,8 +1,5 @@
 <template>
-  <main>
-    <h1>Login</h1>
-    <Login/>
-  </main>
+  <Login />
 </template>
 
 <script setup>

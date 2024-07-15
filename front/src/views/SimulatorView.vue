@@ -4,10 +4,7 @@ import GameGrid from '../components/simulator/GameGrid.vue'
 
 <template>
   <main>
-    <h1>Page Simulateur</h1>
-
     <!-- GRILLE -->
-
     <GameGrid />
   </main>
 </template>
