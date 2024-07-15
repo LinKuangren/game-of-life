@@ -7,6 +7,10 @@
         v-model="search"
         placeholder="Rechercher des configurations..."
       />
+    </div>
+    <div class="flex justify-between items-center my-8">
+      <h1 class="font-bold text-2xl underline my-8">Listes des structures</h1>
+
       <div class="cta-create min-w-fit">
         <router-link to="/wiki/new-configuration">
           <button class="bg-green p-4 hover:bg-blueF text-white flex gap-2 rounded-lg">
@@ -31,33 +35,38 @@
         </router-link>
       </div>
     </div>
-    <h1 class="font-bold underline my-8">Listes des structures</h1>
     <div class="" v-if="search && !filteredConfigurations.length">
       <p>Aucun résultat trouvé!</p>
     </div>
-    <ul>
+    <ul class="grid grid-cols-3 gap-12">
       <!-- <p>Configurations: {{ configurations }}</p> -->
-      <li v-for="configuration in filteredConfigurations" :key="configuration.id">
-        <article class="text-center">
+      <li
+        v-for="configuration in filteredConfigurations"
+        :key="configuration.id"
+        class="bg-slate-50 shadow-sm px-8 py-12 rounded-lg"
+      >
+        <router-link class="flex flex-col gap-8" :to="`/wiki/${configuration.id}`">
           <img
+            class="max-w-xs max-h-[250px] object-contain m-auto"
             :src="`http://localhost:3000/uploads/${configuration.illustration}`"
             alt="Image de la configuration"
           />
-          <router-link :to="`/wiki/${configuration.id}`">
-            <h2 class="bg-blueF text-white p-4">{{ configuration.name }}</h2>
-          </router-link>
-          <div class="flex justify-center">
-            <button
-              class="bg-blueF text-white hover:bg-green hover:text-white"
-              @click="deleteConfiguration(configuration.id)"
-            >
-              Supprimer
-            </button>
+          <h2 class="bg-blueF text-white text-center p-4 rounded-lg">{{ configuration.name }}</h2>
+          <div class="flex justify-center gap-8">
+            <router-link to="#" class="">
+              <button
+                class="bg-error px-8 py-2 rounded-sm text-white"
+                @click="deleteConfiguration(configuration.id)"
+              >
+                Supprimer
+              </button>
+            </router-link>
+
             <router-link :to="`/wiki/edit/${configuration.id}`" class="">
-              <button class="bg-green hover:bg-blueF hover:text-white">Modifier</button>
+              <button class="bg-green px-8 py-2 rounded-sm text-white">Modifier</button>
             </router-link>
           </div>
-        </article>
+        </router-link>
       </li>
     </ul>
     <p v-if="errorMessage" class="">{{ errorMessage }}</p>

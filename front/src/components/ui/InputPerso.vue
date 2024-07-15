@@ -7,7 +7,7 @@ export default {
 
 <template>
   <input
-    class="border-black border-2 rounded-lg text-lg px-4 py-2"
+    class="border-black border-2 text-lg px-4 py-2"
     :type="type"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
