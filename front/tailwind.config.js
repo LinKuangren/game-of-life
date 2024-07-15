@@ -11,6 +11,9 @@ export default {
         gray: 'var(--gray)',
         ok: 'var(--ok)',
         error: 'var(--error)'
+      },
+      gridTemplateRows: {
+        holy: 'auto 1fr auto' // -> utility class `grid-rows-holy`
       }
     }
   },

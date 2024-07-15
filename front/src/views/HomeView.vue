@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-  <main class="bg-slate-200"></main>
+  <main></main>
 </template>

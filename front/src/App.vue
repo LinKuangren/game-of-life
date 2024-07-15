@@ -1,9 +1,7 @@
 <template>
-  <main>
+  <main class="min-h-screen grid grid-rows-holy">
     <Navigation />
-    <div>
-      <RouterView></RouterView>
-    </div>
+    <RouterView></RouterView>
     <Footer />
   </main>
 </template>

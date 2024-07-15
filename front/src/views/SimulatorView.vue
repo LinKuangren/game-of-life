@@ -3,7 +3,7 @@ import GameGrid from '../components/simulator/GameGrid.vue'
 </script>
 
 <template>
-  <main class="bg-slate-200">
+  <main>
     <!-- GRILLE -->
     <GameGrid />
   </main>

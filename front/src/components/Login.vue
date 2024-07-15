@@ -1,57 +1,65 @@
 <template>
-  <div>
-    <form v-on:submit.prevent="Login" class="form">
-      <label>Nom</label>
-      <input type="text" v-model="name" required>
-      <label>Mot de passe</label>
-      <input type="password" v-model="password" required>
-      <button class="gdc-2 gdc-color-2" type="submit">Envoyer</button>
+  <div class="w-full max-w-screen-sm bg-slate-50 shadow-lg m-auto px-8 py-12 self-center">
+    <h1 class="text-center font-bold text-xl">S'inscrire</h1>
+    <form v-on:submit.prevent="Login" class="flex flex-col gap-4">
+      <label class="flex flex-col gap-2 text-lg"
+        >Nom
+        <input-perso type="text" v-model="name" :required="true" />
+      </label>
+      <label class="flex flex-col gap-2"
+        >Mot de passe
+        <input-perso type="password" v-model="password" :required="true" />
+      </label>
+      <button class="gdc-2 gdc-color-2" type="submit">S'inscrire</button>
     </form>
-    <p v-if="message" :class="{'success': success, 'error': !success}">{{ message }}</p>
+    <p v-if="message" :class="{ success: success, error: !success }">{{ message }}</p>
   </div>
 </template>
 
 <script>
+import InputPerso from '../components/ui/InputPerso.vue'
+
 export default {
+  components: { InputPerso },
   data() {
     return {
-      name: "",
-      password: "",
-      message: "",
+      name: '',
+      password: '',
+      message: '',
       success: false
-    };
+    }
   },
   methods: {
     async Login() {
       try {
-        const response = await fetch("http://127.0.0.1:3000/user/login", {
-          method: "POST",
+        const response = await fetch('http://127.0.0.1:3000/user/login', {
+          method: 'POST',
           headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             name: this.name,
-            password: this.password,
-          }),
-        });
+            password: this.password
+          })
+        })
 
         if (response.ok) {
-          const login = await response.json();
-          this.message = 'Connecté : ' + login.message;
-          this.success = true;
+          const login = await response.json()
+          this.message = 'Connecté : ' + login.message
+          this.success = true
         } else {
-          const error = await response.json();
-          this.message = 'Erreur : ' + error.error;
-          this.success = false;
+          const error = await response.json()
+          this.message = 'Erreur : ' + error.error
+          this.success = false
         }
       } catch (error) {
-        this.message = 'Erreur de connexion';
-        this.success = false;
+        this.message = 'Erreur de connexion'
+        this.success = false
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
