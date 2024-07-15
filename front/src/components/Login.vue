@@ -1,6 +1,6 @@
 <template>
   <div class="w-full max-w-screen-sm bg-slate-50 shadow-lg m-auto px-8 py-12 self-center">
-    <h1 class="text-center font-bold text-xl">S'inscrire</h1>
+    <h1 class="text-center font-bold text-xl">Se connecter</h1>
     <form v-on:submit.prevent="Login" class="flex flex-col gap-4">
       <label class="flex flex-col gap-2 text-lg"
         >Nom
@@ -10,7 +10,7 @@
         >Mot de passe
         <input-perso type="password" v-model="password" :required="true" />
       </label>
-      <button class="gdc-2 gdc-color-2" type="submit">S'inscrire</button>
+      <button class="gdc-2 gdc-color-2" type="submit">Connexion</button>
     </form>
     <p v-if="message" :class="{ success: success, error: !success }">{{ message }}</p>
   </div>
