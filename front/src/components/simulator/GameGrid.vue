@@ -77,43 +77,11 @@ function playOne() {
       }
 
       nextTable[row][col] = nextState
-
-      // if (!isStayAlive(aliveNeighbours)) {
-      //   nextTable[row][col] = 0
-      // } else {
-      //   if (!isStayDead(aliveNeighbours)) {
-      //     nextTable[row][col] = 1
-      //   }
-      // }
     }
   }
 
   gridTable.value = nextTable
-
-  // const allCells = getAllCells()
-  // const aliveCells = getAliveCells()
-
-  // aliveCells.forEach((cell) => {
-  //   getNeighbours(cell)
-  // })
-
-  // allCells.forEach((cell) => {
-  //   if (cell.classList.contains('alive')) {
-  //     if (!isStayAlive(getNeighbours(cell, allCells))) {
-  //       cell.classList.add('nextDead')
-  //     }
-  //   } else {
-  //     if (!isStayDead(getNeighbours(cell, allCells))) cell.classList.add('nextAlive')
-  //   }
-  // })
-
-  // document.querySelectorAll('.nextDead').forEach((e) => e.classList.remove('nextDead', 'alive'))
-  // document.querySelectorAll('.nextAlive').forEach((e) => {
-  //   e.classList.remove('nextAlive')
-  //   e.classList.add('alive')
-  // })
-
-  // counter.value = counter.value + 1
+  counter.value = counter.value + 1
 }
 
 function playContinue() {
