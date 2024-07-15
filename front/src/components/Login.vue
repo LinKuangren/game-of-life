@@ -6,7 +6,7 @@
         Nom
         <input-perso type="text" v-model="name" :required="true" />
       </label>
-      <label class="flex flex-col gap-2>
+      <label class="flex flex-col gap-2">
         Mot de passe
         <input-perso type="password" v-model="password" :required="true" />
       </label>
