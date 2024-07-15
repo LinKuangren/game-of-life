@@ -6,6 +6,7 @@ import NewWikiView from '../views/Wiki/NewWikiView.vue'
 import EditWikiView from '../views/Wiki/EditWikiView.vue'
 import ReadWikiView from '../views/Wiki/ReadWikiView.vue'
 import LoginView from '../views/LoginView.vue'
+import AccueilView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +65,14 @@ const router = createRouter({
       component: LoginView,
       meta: {
         title: 'Connexion'
+      }
+    },
+    {
+      path: '/accueil',
+      name: 'accueil',
+      component: AccueilView,
+      meta: {
+        title: 'Accueil'
       }
     }
   ]
