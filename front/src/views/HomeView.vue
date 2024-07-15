@@ -1,13 +1,5 @@
-<script setup>
-import GameGrid from '../components/simulator/GameGrid.vue'
-</script>
+<script setup></script>
 
 <template>
-  <main>
-    <h1>Simulateur</h1>
-
-    <!-- GRILLE -->
-
-    <GameGrid />
-  </main>
+  <main class="bg-slate-200"></main>
 </template>

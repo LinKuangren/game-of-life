@@ -1,9 +1,9 @@
 <template>
   <main>
-    <Navigation/>
-    <div class="mx-20 my-0 bg-white min-h-screen">
+    <Navigation />
+    <div>
       <RouterView></RouterView>
     </div>
-    <Footer/>
+    <Footer />
   </main>
 </template>

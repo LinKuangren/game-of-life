@@ -3,11 +3,8 @@ import GameGrid from '../components/simulator/GameGrid.vue'
 </script>
 
 <template>
-  <main>
-    <h1>Page Simulateur</h1>
-
+  <main class="bg-slate-200">
     <!-- GRILLE -->
-
     <GameGrid />
   </main>
 </template>
