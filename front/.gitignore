@@ -28,3 +28,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Interne projet
+uploads/*
+prisma/migrations/*

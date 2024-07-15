@@ -6,6 +6,7 @@ import NewWikiView from '../views/Wiki/NewWikiView.vue'
 import EditWikiView from '../views/Wiki/EditWikiView.vue'
 import ReadWikiView from '../views/Wiki/ReadWikiView.vue'
 import LoginView from '../views/LoginView.vue'
+import { isAuthenticated } from '../utils/auth.js'
 import AccueilView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -40,7 +41,8 @@ const router = createRouter({
       name: 'new-wiki',
       component: NewWikiView,
       meta: {
-        title: 'New Wiki'
+        title: 'New Wiki',
+        requiresAuth: true
       }
     },
     {
@@ -48,7 +50,8 @@ const router = createRouter({
       name: 'edit-wiki',
       component: EditWikiView,
       meta: {
-        title: 'Edit wiki'
+        title: 'Edit Wiki',
+        requiresAuth: true
       }
     },
     {
@@ -56,7 +59,7 @@ const router = createRouter({
       name: 'read-wiki',
       component: ReadWikiView,
       meta: {
-        title: 'Read wiki'
+        title: 'Read wiki',
       }
     },
     {
@@ -80,7 +83,22 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'Vite App'
-  next()
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Cette route nécessite une authentification
+    if (!isAuthenticated()) {
+      // L'utilisateur n'est pas authentifié, redirigez-le vers la page de connexion
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      // L'utilisateur est authentifié, autorisez l'accès
+      next()
+    }
+  } else {
+    // La route ne nécessite pas d'authentification
+    next()
+  }
 })
 
 export default router
