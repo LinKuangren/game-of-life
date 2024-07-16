@@ -75,29 +75,29 @@
     </div>
     <div class="mt-20">
       <h1 class="text-center text-4xl font-bold pb-6">Dernières création</h1>
-      <ul class="justify-center lg:flex md:grid">
-        <li v-for="configuration in recentConfigurations" :key="configuration.id">
-          <article class="text-center lg:px-14 md:grid">
+      <ul class="grid lg:grid-cols-3 gap-12 md:grid-cols-2">
+        <li v-for="configuration in recentConfigurations" :key="configuration.id" class="bg-slate-50 shadow-sm rounded-lg">
+          <router-link class="flex flex-col gap-8" :to="`/wiki/${configuration.id}`">
             <img
-              class="lg:h-auto md:h-60"
+              class="max-w-xs max-h-[250px] object-contain m-auto"
               :src="`http://localhost:3000/uploads/${configuration.illustration}`"
               alt="Image de la configuration"
             />
-            <router-link :to="`/wiki/${configuration.id}`">
-              <h2 class="bg-blueF text-white p-4">{{ configuration.name }}</h2>
-            </router-link>
-            <div class="flex justify-center">
-              <button
-                class="bg-blueF text-white hover:bg-green hover:text-white"
-                @click="deleteConfiguration(configuration.id)"
-              >
-                Supprimer
-              </button>
+            <h2 class="bg-blueF text-white text-center p-4 rounded-lg hover:bg-dark">{{ configuration.name }}</h2>
+            <div class="flex justify-center xl:gap-8 lg:gap-4 md:gap-2">
+              <router-link to="#" class="">
+                <button
+                  class="bg-error px-8 py-2 rounded-sm text-white hover:bg-error_hover"
+                  @click="deleteConfiguration(configuration.id)"
+                >
+                  Supprimer
+                </button>
+              </router-link>
               <router-link :to="`/wiki/edit/${configuration.id}`" class="">
-                <button class="bg-green hover:bg-blueF hover:text-white">Modifier</button>
+                <button class="bg-green px-8 py-2 rounded-sm text-white hover:bg-green_hover">Modifier</button>
               </router-link>
             </div>
-          </article>
+          </router-link>
         </li>
       </ul>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>

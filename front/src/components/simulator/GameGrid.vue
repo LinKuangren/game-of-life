@@ -137,7 +137,7 @@ function reset() {
           <ButtonPerso @click="playContinue">Start</ButtonPerso>
           <ButtonPerso @click="stop" type="alert">Stop</ButtonPerso>
           <ButtonPerso @click="reset">Reset</ButtonPerso>
-          <ButtonPerso type="neutral">{{ counter }}</ButtonPerso>
+          <ButtonPerso type="neutral">Count:<br>{{ counter }}</ButtonPerso>
         </div>
       </div>
     </section>

@@ -8,9 +8,11 @@ export default {
         white: 'var(--white)',
         blueF: 'var(--blueF)',
         green: 'var(--green)',
+        green_hover: 'var(--green_hover)',
         gray: 'var(--gray)',
         ok: 'var(--ok)',
-        error: 'var(--error)'
+        error: 'var(--error)',
+        error_hover: 'var(--error_hover)',
       },
       gridTemplateRows: {
         holy: 'auto 1fr auto' // -> utility class `grid-rows-holy`

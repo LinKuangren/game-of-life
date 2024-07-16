@@ -3,7 +3,9 @@
   --white: white;
   --blueF: #122c34;
   --green: #4ff784;
+  --green_hover: #17B169;
   --gray: #8f9595;
   --ok: green;
   --error: red;
+  --error_hover: #BA0021;
 }
