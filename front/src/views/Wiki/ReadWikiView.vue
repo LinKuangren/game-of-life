@@ -10,17 +10,11 @@
             alt="Image de la configuration"
           />
           <div class="flex justify-center gap-8">
-            <router-link to="#" class="">
-              <button
-                class="bg-error px-8 py-2 rounded-sm text-white"
-                @click="deleteConfiguration(configuration.id)"
-              >
-                Supprimer
-              </button>
-            </router-link>
-
+            <button class="bg-error px-8 py-2 rounded-sm text-white hover:bg-error_hover" @click="showDeletePopover(configuration.id)">
+              Supprimer
+            </button>
             <router-link :to="`/wiki/edit/${configuration.id}`" class="">
-              <button class="bg-green px-8 py-2 rounded-sm text-white">Modifier</button>
+              <button class="bg-green px-8 py-2 rounded-sm text-white hover:bg-green_hover">Modifier</button>
             </router-link>
           </div>
         </div>
@@ -47,6 +41,17 @@
           </div>
         </div>
       </div>
+      <div v-if="deletePopoverId === configuration.id" class="popover">
+        <p>Êtes-vous sûr de vouloir supprimer cette configuration ?</p>
+        <div class="flex justify-center gap-4 mt-4">
+          <button class="bg-error px-4 py-2 rounded-sm text-white hover:bg-error_hover" @click="deleteConfiguration(configuration.id)">
+            Supprimer
+          </button>
+          <button class="bg-gray-200 px-4 py-2 rounded-sm text-gray-900 hover:bg-gray-300" @click="cancelDelete">
+            Annuler
+          </button>
+        </div>
+      </div>
     </div>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </main>
@@ -57,6 +62,7 @@ export default {
   data() {
     return {
       configuration: [],
+      deletePopoverId: null,
       errorMessage: ''
     }
   },
@@ -93,12 +99,35 @@ export default {
             throw new Error('Erreur lors de la suppression de la configuration')
           }
           this.fetchConfiguration()
+
+          this.deletePopoverId = null
+
+          this.$router.push('/wiki')
         })
         .catch((error) => {
           console.error('Erreur de suppression:', error)
           this.errorMessage = 'Échec de la suppression de la configuration. Veuillez réessayer.'
         })
+    },
+    showDeletePopover(configurationId) {
+      this.deletePopoverId = configurationId;
+    },
+    cancelDelete() {
+      this.deletePopoverId = null;
     }
   }
 }
 </script>
+
+<style scoped>
+  .popover {
+    position: fixed;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    left: 35%;
+    top: 35%;
+  }
+</style>

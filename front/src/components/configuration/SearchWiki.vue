@@ -51,20 +51,26 @@
             alt="Image de la configuration"
           />
           <h2 class="bg-blueF text-white text-center p-4 rounded-lg hover:bg-dark">{{ configuration.name }}</h2>
-          <div class="flex justify-center gap-8">
-            <router-link to="#" class="">
-              <button
-                class="bg-error px-8 py-2 rounded-sm text-white hover:bg-error_hover"
-                @click="deleteConfiguration(configuration.id)"
-              >
-                Supprimer
-              </button>
-            </router-link>
-            <router-link :to="`/wiki/edit/${configuration.id}`" class="">
-              <button class="bg-green px-8 py-2 rounded-sm text-white hover:bg-green_hover">Modifier</button>
-            </router-link>
-          </div>
         </router-link>
+        <div class="flex justify-center gap-8">
+          <button class="bg-error px-8 py-2 rounded-sm text-white hover:bg-error_hover" @click="showDeletePopover(configuration.id)">
+            Supprimer
+          </button>
+          <router-link :to="`/wiki/edit/${configuration.id}`" class="">
+            <button class="bg-green px-8 py-2 rounded-sm text-white hover:bg-green_hover">Modifier</button>
+          </router-link>
+        </div>
+        <div v-if="deletePopoverId === configuration.id" class="popover">
+          <p>Êtes-vous sûr de vouloir supprimer cette configuration ?</p>
+          <div class="flex justify-center gap-4 mt-4">
+            <button class="bg-error px-4 py-2 rounded-sm text-white hover:bg-error_hover" @click="confirmDelete(configuration.id)">
+              Supprimer
+            </button>
+            <button class="bg-gray-200 px-4 py-2 rounded-sm text-gray-900 hover:bg-gray-300" @click="cancelDelete">
+              Annuler
+            </button>
+          </div>
+        </div>
       </li>
     </ul>
     <p v-if="errorMessage" class="">{{ errorMessage }}</p>
@@ -89,7 +95,20 @@ export default {
   },
   data() {
     return {
-      search: ''
+      search: '',
+      deletePopoverId: null
+    }
+  },
+  methods: {
+    showDeletePopover(configurationId) {
+      this.deletePopoverId = configurationId;
+    },
+    confirmDelete(configurationId) {
+      this.deleteConfiguration(configurationId);
+      this.deletePopoverId = null;
+    },
+    cancelDelete() {
+      this.deletePopoverId = null;
     }
   },
   computed: {
@@ -101,3 +120,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .popover {
+    position: fixed;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    left: 35%;
+    top: 35%;
+  }
+</style>
