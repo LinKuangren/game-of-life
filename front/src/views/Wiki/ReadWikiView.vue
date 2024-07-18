@@ -24,7 +24,7 @@
             </router-link>
           </div>
         </div>
-        <div class="justify-center">
+        <div class="justify-center ml-24">
           <div class="p-8 bg-blueF text-white my-4">
             <p class="font-bold">Types :</p>
             <p>{{ configuration.type }}</p>

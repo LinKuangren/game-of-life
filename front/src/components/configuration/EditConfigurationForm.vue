@@ -6,7 +6,7 @@
     </label>
     <label class="flex flex-col w-full"
       >Illustration
-      <input type="file" accept="image/*" ref="file" @change="upload" required />
+      <input type="file" accept="image/*" ref="file" @change="upload"/>
     </label>
     <label class="flex flex-col w-full"
       >Type
@@ -50,7 +50,7 @@ export default {
     return {
       id: this.$route.params.id,
       name: '',
-      illustration: '',
+      illustration: null,
       type: '',
       boundingBox: '',
       nbCellules: '',
