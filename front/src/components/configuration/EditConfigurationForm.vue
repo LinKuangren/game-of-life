@@ -8,6 +8,11 @@
       >Illustration
       <input type="file" accept="image/*" ref="file" @change="upload"/>
     </label>
+    <img
+      class="max-w-xs max-h-[250px] object-contain m-auto"
+      :src="`http://localhost:3000/uploads/${illustration}`"
+      alt="Image de la configuration"
+    />
     <label class="flex flex-col w-full"
       >Type
       <select
