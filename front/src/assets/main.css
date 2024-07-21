@@ -8,7 +8,7 @@
 }
 
 .alive {
-  @apply bg-red-400;
+  @apply bg-green;
 }
 
 .edit-btn {
